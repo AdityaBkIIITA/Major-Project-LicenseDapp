@@ -1,0 +1,506 @@
+{
+    "abi": [
+    {
+      "inputs": [],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "CRList",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "ChallengeHash",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "ResponseHash",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "DeviceId",
+          "type": "string"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "filehashList",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "ipfsHash",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "fileName",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "fileType",
+          "type": "string"
+        },
+        {
+          "internalType": "uint256",
+          "name": "fileSize",
+          "type": "uint256"
+        },
+        {
+          "internalType": "string",
+          "name": "dateAdded",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "timeAdded",
+          "type": "string"
+        },
+        {
+          "internalType": "uint256",
+          "name": "downloadCount",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "_ChallengeHash",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "_ResponseHash",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "_DeviceId",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "_mId",
+          "type": "string"
+        }
+      ],
+      "name": "addDevice",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "_mId",
+          "type": "string"
+        }
+      ],
+      "name": "getDevices",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "string",
+              "name": "ChallengeHash",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "ResponseHash",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "DeviceId",
+              "type": "string"
+            }
+          ],
+          "internalType": "struct Main.ChallengeResponseFiles[]",
+          "name": "",
+          "type": "tuple[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "_deviceId",
+          "type": "string"
+        }
+      ],
+      "name": "getfiles",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "string",
+              "name": "ipfsHash",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "fileName",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "fileType",
+              "type": "string"
+            },
+            {
+              "internalType": "uint256",
+              "name": "fileSize",
+              "type": "uint256"
+            },
+            {
+              "internalType": "string",
+              "name": "dateAdded",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "timeAdded",
+              "type": "string"
+            },
+            {
+              "internalType": "uint256",
+              "name": "downloadCount",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct Main.DocInfo[]",
+          "name": "",
+          "type": "tuple[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "prev",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "newAdmin",
+          "type": "string"
+        }
+      ],
+      "name": "adminAdd",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "_address",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "_name",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "_userName",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "_email",
+          "type": "string"
+        },
+        {
+          "internalType": "bool",
+          "name": "_isAdmin",
+          "type": "bool"
+        },
+        {
+          "internalType": "string",
+          "name": "_adminId",
+          "type": "string"
+        }
+      ],
+      "name": "signUp",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "_address",
+          "type": "string"
+        }
+      ],
+      "name": "signIn",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "string",
+              "name": "name",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "username",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "email",
+              "type": "string"
+            },
+            {
+              "internalType": "bool",
+              "name": "isexist",
+              "type": "bool"
+            },
+            {
+              "internalType": "bool",
+              "name": "isAdmin",
+              "type": "bool"
+            },
+            {
+              "internalType": "string",
+              "name": "adminId",
+              "type": "string"
+            }
+          ],
+          "internalType": "struct Main.UserInfo",
+          "name": "",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "_address",
+          "type": "string"
+        }
+      ],
+      "name": "isAdmin",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "_address",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "_ipfsHash",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "_fileName",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "_fileType",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "_dateAdded",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "_timeAdded",
+          "type": "string"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_fileSize",
+          "type": "uint256"
+        },
+        {
+          "internalType": "string",
+          "name": "_deviceId",
+          "type": "string"
+        }
+      ],
+      "name": "addFile",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "_address",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "_ipfs",
+          "type": "string"
+        }
+      ],
+      "name": "newDownloadByUser",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getFiles",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "string",
+              "name": "ipfsHash",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "fileName",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "fileType",
+              "type": "string"
+            },
+            {
+              "internalType": "uint256",
+              "name": "fileSize",
+              "type": "uint256"
+            },
+            {
+              "internalType": "string",
+              "name": "dateAdded",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "timeAdded",
+              "type": "string"
+            },
+            {
+              "internalType": "uint256",
+              "name": "downloadCount",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct Main.DocInfo[]",
+          "name": "",
+          "type": "tuple[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "_address",
+          "type": "string"
+        }
+      ],
+      "name": "downloadedbyUser",
+      "outputs": [
+        {
+          "internalType": "string[]",
+          "name": "",
+          "type": "string[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "_address",
+          "type": "string"
+        }
+      ],
+      "name": "uploadedbyAdmin",
+      "outputs": [
+        {
+          "internalType": "string[]",
+          "name": "",
+          "type": "string[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    }
+  ]
+}

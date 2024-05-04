@@ -1,0 +1,40 @@
+/* SignIn.css */
+
+/* Container */
+.signIn-container {
+    margin-top: 50px; /* Adjust margin top as needed */
+  }
+  
+  /* Card */
+  .card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Card Body */
+  .card-body {
+    padding: 20px; /* Adjust padding as needed */
+  }
+  
+  /* Card Title */
+  .card-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  /* Form Label */
+  .form-label {
+    font-weight: bold;
+  }
+  
+  /* Sign In Button */
+  .signIn-button {
+    width: 100%;
+    padding: 10px 20px;
+    font-size: 18px;
+    border-radius: 4px;
+  }
+  
+  /* Add additional styling as needed */
+  

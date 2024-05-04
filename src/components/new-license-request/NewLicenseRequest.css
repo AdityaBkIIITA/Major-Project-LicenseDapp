@@ -1,0 +1,24 @@
+/* NewLicenseRequest.css */
+
+input[type="text"],
+textarea,
+button {
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+button[type="button"] {
+  margin-left: 10px;
+}
+
+button[type="submit"] {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+button[type="submit"]:hover {
+  background-color: #0056b3;
+}

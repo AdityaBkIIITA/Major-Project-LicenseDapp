@@ -1,0 +1,28 @@
+/* SignUp.css */
+
+.signUp-container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .signUp-header {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .signUp-button {
+    background-color: #28a745;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .signUp-button:hover {
+    background-color: #218838;
+  }
+  

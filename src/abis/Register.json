@@ -1,0 +1,133 @@
+{
+    "abi": [
+        {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "userAddress",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "internalType": "string",
+              "name": "userName",
+              "type": "string"
+            },
+            {
+              "indexed": false,
+              "internalType": "string",
+              "name": "email",
+              "type": "string"
+            },
+            {
+              "indexed": false,
+              "internalType": "enum Register.Role",
+              "name": "role",
+              "type": "uint8"
+            }
+          ],
+          "name": "UserRegistered",
+          "type": "event"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "",
+              "type": "address"
+            }
+          ],
+          "name": "users",
+          "outputs": [
+            {
+              "internalType": "string",
+              "name": "userName",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "email",
+              "type": "string"
+            },
+            {
+              "internalType": "enum Register.Role",
+              "name": "role",
+              "type": "uint8"
+            },
+            {
+              "internalType": "string",
+              "name": "signedMessage",
+              "type": "string"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function",
+          "constant": true
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "string",
+              "name": "_userName",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "_email",
+              "type": "string"
+            },
+            {
+              "internalType": "enum Register.Role",
+              "name": "_role",
+              "type": "uint8"
+            },
+            {
+              "internalType": "string",
+              "name": "_signedMessage",
+              "type": "string"
+            }
+          ],
+          "name": "register",
+          "outputs": [],
+          "stateMutability": "nonpayable",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "_userAddress",
+              "type": "address"
+            }
+          ],
+          "name": "getUser",
+          "outputs": [
+            {
+              "internalType": "string",
+              "name": "",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "",
+              "type": "string"
+            },
+            {
+              "internalType": "enum Register.Role",
+              "name": "",
+              "type": "uint8"
+            },
+            {
+              "internalType": "string",
+              "name": "",
+              "type": "string"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function",
+          "constant": true
+        }
+      ]
+}

@@ -1,0 +1,32 @@
+/* addFile.css */
+
+.addFile-container {
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  
+  .addFile-header {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .addFile-input {
+    margin-bottom: 20px;
+  }
+  
+  .addFile-button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .addFile-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .addFile-ipfsHash {
+    margin-top: 20px;
+  }
+  
