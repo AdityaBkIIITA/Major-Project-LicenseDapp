@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { uploadFileToIPFS } from '../../utils/ipfs';
 import { addFileToContract } from '../../utils/web3';
-import './AddFile.css';
 
 function AddFile() {
   const [file, setFile] = useState(null);

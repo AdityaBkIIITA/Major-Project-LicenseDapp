@@ -1,0 +1,360 @@
+{
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "allLicenseIds",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "name": "licenses",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "licenseId",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "sfId",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "rbId",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "message",
+          "type": "string"
+        },
+        {
+          "internalType": "uint256",
+          "name": "grantTimestamp",
+          "type": "uint256"
+        },
+        {
+          "internalType": "string",
+          "name": "sfFileHash",
+          "type": "string"
+        },
+        {
+          "internalType": "enum LicenseContract.Status",
+          "name": "status",
+          "type": "uint8"
+        },
+        {
+          "internalType": "string",
+          "name": "licenseFileHash",
+          "type": "string"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [],
+      "name": "nextLicenseId",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "rbToLicense",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "sfToLicense",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "_licenseId",
+          "type": "string"
+        }
+      ],
+      "name": "getLicense",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "string",
+              "name": "licenseId",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "sfId",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "rbId",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "message",
+              "type": "string"
+            },
+            {
+              "internalType": "uint256",
+              "name": "grantTimestamp",
+              "type": "uint256"
+            },
+            {
+              "internalType": "string",
+              "name": "sfFileHash",
+              "type": "string"
+            },
+            {
+              "internalType": "enum LicenseContract.Status",
+              "name": "status",
+              "type": "uint8"
+            },
+            {
+              "internalType": "string",
+              "name": "licenseFileHash",
+              "type": "string"
+            }
+          ],
+          "internalType": "struct LicenseContract.License",
+          "name": "",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "_sfId",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "_rbId",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "_message",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "_sfFileHash",
+          "type": "string"
+        }
+      ],
+      "name": "addLicenseRequest",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "_sfId",
+          "type": "string"
+        }
+      ],
+      "name": "getLicensesForSF",
+      "outputs": [
+        {
+          "internalType": "string[]",
+          "name": "",
+          "type": "string[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "_rbId",
+          "type": "string"
+        }
+      ],
+      "name": "getLicensesForRB",
+      "outputs": [
+        {
+          "internalType": "string[]",
+          "name": "",
+          "type": "string[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "licenseId",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "licenseFileHash",
+          "type": "string"
+        }
+      ],
+      "name": "approveLicense",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "licenseId",
+          "type": "string"
+        }
+      ],
+      "name": "rejectLicense",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getAllLicenses",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "string",
+              "name": "licenseId",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "sfId",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "rbId",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "message",
+              "type": "string"
+            },
+            {
+              "internalType": "uint256",
+              "name": "grantTimestamp",
+              "type": "uint256"
+            },
+            {
+              "internalType": "string",
+              "name": "sfFileHash",
+              "type": "string"
+            },
+            {
+              "internalType": "enum LicenseContract.Status",
+              "name": "status",
+              "type": "uint8"
+            },
+            {
+              "internalType": "string",
+              "name": "licenseFileHash",
+              "type": "string"
+            }
+          ],
+          "internalType": "struct LicenseContract.License[]",
+          "name": "",
+          "type": "tuple[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    }
+  ]
+}

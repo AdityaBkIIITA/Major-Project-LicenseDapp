@@ -1,20 +1,65 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { getFileFromIPFS } from '../../utils/ipfs';
 
-function Requests() {
-  // Dummy data for demonstration
-  const licenseRequests = [
-    { sfId: 'SF123', message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.', file: 'file1.pdf' },
-    { sfId: 'SF456', message: 'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', file: 'file2.pdf' },
-  ];
+function Requests({ address, licenseContract, licenseIds }) {
+  const [licenseData, setLicenseData] = useState([]);
 
-  const handleAccept = (sfId) => {
-    // Handle accept logic
-    console.log(`Accept request for SF ID: ${sfId}`);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await Promise.all(
+          licenseIds.map(async (licenseId) => {
+            const license = await licenseContract.methods.getLicense(licenseId).call();
+            if (license.status === "Pending") {
+              const ipfsHash = license.ipfsHash;
+              const { data, contentType } = await getFileFromIPFS(ipfsHash);
+              return {
+                sfId: license.sfId,
+                lfId: license.lfId,
+                message: license.message,
+                file: "Software"+ipfsHash,
+                downloadLink: URL.createObjectURL(new Blob([data], { type: contentType })),
+              };
+            } else {
+              return null; // Return null for non-pending requests
+            }
+          })
+        );
+
+        // Filter out null values before setting the state
+        const filteredData = data.filter((item) => item !== null);
+        setLicenseData(filteredData);
+      } catch (error) {
+        console.error('Error fetching licenses:', error);
+      }
+    };
+
+    fetchData();
+  }, [licenseContract, licenseIds]);
+
+  const handleAccept = async (lfId) => {
+    try {
+      await licenseContract.methods.approveLicense(lfId).send({ from: address });
+    } catch (error) {
+      console.error('Error approving license:', error);
+    }
   };
 
-  const handleReject = (sfId) => {
-    // Handle reject logic
-    console.log(`Reject request for SF ID: ${sfId}`);
+  const handleReject = async (lfId) => {
+    try {
+      await licenseContract.methods.rejectLicense(lfId).send({ from: address });
+    } catch (error) {
+      console.error('Error rejecting license:', error); // Add error handling logic here
+    }
+  };
+
+  const handleDownload = (url) => {
+    try {
+      // Open the download link in a new window
+      window.open(url);
+    } catch (error) {
+      console.error('Error downloading file:', error);
+    }
   };
 
   return (
@@ -30,16 +75,16 @@ function Requests() {
           </tr>
         </thead>
         <tbody>
-          {licenseRequests.map((request, index) => (
+          {licenseData.map((request, index) => (
             <tr key={index}>
               <td>{request.sfId}</td>
               <td>{request.message}</td>
               <td>
-                <a href={request.file} download>{request.file}</a>
+                <button className="btn btn-link" onClick={() => handleDownload(request.url)}>request.file</button>
               </td>
               <td>
-                <button className="btn btn-success mr-2" onClick={() => handleAccept(request.sfId)}>Accept</button>
-                <button className="btn btn-danger" onClick={() => handleReject(request.sfId)}>Reject</button>
+                <button className="btn btn-success mr-2" onClick={() => handleAccept(request.lfId)}>Accept</button>
+                <button className="btn btn-danger" onClick={() => handleReject(request.lfId)}>Reject</button>
               </td>
             </tr>
           ))}

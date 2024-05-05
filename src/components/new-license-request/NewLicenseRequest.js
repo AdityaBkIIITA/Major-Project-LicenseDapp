@@ -1,19 +1,34 @@
-// NewLicenseRequest.js
-
 import React, { useState } from 'react';
 import './NewLicenseRequest.css';
+import { uploadFileToIPFS } from '../../utils/ipfs';
 
-function NewLicenseRequest() {
+function NewLicenseRequest({ address, licenseContract, sfId }) {
+  console.log(sfId);
   // State variables to store form data
-  const [licenseId, setLicenseId] = useState('');
   const [file, setFile] = useState(null);
   const [message, setMessage] = useState('');
+  const [rbId, setRbId] = useState('');
 
   // Function to handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission logic, e.g., sending data to backend
-    console.log('Form submitted:', { licenseId, file, message });
+    // Upload file to IPFS and get the IPFS hash
+    const ipfsHash = await uploadFileToIPFS(file);
+    console.log(ipfsHash, typeof(ipfsHash));
+    console.log(sfId, typeof(sfId));
+    console.log(rbId, typeof(rbId));
+    console.log(message, typeof(message));
+
+    // Call the contract method to add a license request
+    try {
+      await licenseContract.methods.addLicenseRequest(sfId, rbId, message, ipfsHash).send({ from: address });
+      // Clear the form after submission
+      setFile(null);
+      setMessage('');
+      setRbId('');
+    } catch (error) {
+      console.error('Error submitting license request:', error);
+    }
   };
 
   // Function to handle file input change
@@ -22,13 +37,10 @@ function NewLicenseRequest() {
     setFile(selectedFile);
   };
 
-  // Function to generate a new license ID
-  const generateLicenseId = () => {
-    // Implement logic to generate a unique license ID
-    // For example, you can fetch the count from the backend and add 1
-    const count = 100; // Example count
-    const newLicenseId = `L-${count + 1}`;
-    setLicenseId(newLicenseId);
+  // Function to handle RBId input change
+  const handleRbIdChange = (e) => {
+    const rbIdValue = e.target.value;
+    setRbId(rbIdValue);
   };
 
   return (
@@ -36,13 +48,12 @@ function NewLicenseRequest() {
       <h2>New License Request</h2>
       <form onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="licenseId">License ID</label>
-          <input type="text" id="licenseId" value={licenseId} readOnly />
-          <button type="button" onClick={generateLicenseId}>Generate ID</button>
-        </div>
-        <div>
           <label htmlFor="file">Upload File</label>
           <input type="file" id="file" onChange={handleFileChange} />
+        </div>
+        <div>
+          <label htmlFor="rbId">Regulatory Body Identifier</label>
+          <input type="text" id="rbId" value={rbId} onChange={handleRbIdChange} />
         </div>
         <div>
           <label htmlFor="message">Message</label>

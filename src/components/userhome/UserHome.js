@@ -1,13 +1,45 @@
-import React, { useState } from 'react';
-import './UserHome.css'; // Import CSS file for UserHome
+import React, { useState, useEffect } from 'react';
+import { getLicenseContract } from '../../utils/web3';
+import { getFileFromIPFS } from '../../utils/ipfs';
 
-function UserHome() {
-  // Dummy data for demonstration
-  const data = [
-    { slNo: 1, name: 'File 1', size: '10 MB', date: '2024-05-10' },
-    { slNo: 2, name: 'File 2', size: '15 MB', date: '2024-05-12' },
-    { slNo: 3, name: 'File 3', size: '8 MB', date: '2024-05-15' },
-  ];
+function UserHome({ address }) {
+  const [licenseData, setLicenseData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const licenseContract = await getLicenseContract();
+        const allLicenses = await licenseContract.methods.getAllLicenses().call();
+
+        const data = await Promise.all(
+          allLicenses.map(async (license) => {
+            if (license.status === "Approved") {
+              const ipfsHash = license.ipfsHash;
+              const { data, contentType } = await getFileFromIPFS(ipfsHash);
+              return {
+                lfId: license.lfId,
+                rbId: license.rbId,
+                name: "LicenseFile+" + ipfsHash, // Adjust name as needed
+                size: data.size, // Assuming size is available in data
+                date: new Date(license.grantTimestamp * 1000).toLocaleDateString(), // Convert timestamp to date
+                downloadLink: URL.createObjectURL(new Blob([data], { type: contentType })),
+              };
+            } else {
+              return null; // Return null for non-approved licenses
+            }
+          })
+        );
+
+        // Filter out null values before setting the state
+        const filteredData = data.filter((item) => item !== null);
+        setLicenseData(filteredData);
+      } catch (error) {
+        console.error('Error fetching licenses:', error);
+      }
+    };
+
+    fetchData();
+  }, []); // Removed dependencies as we're not using any external props or state
 
   // State to track expanded rows
   const [expandedRow, setExpandedRow] = useState(null);
@@ -31,10 +63,10 @@ function UserHome() {
           </tr>
         </thead>
         <tbody>
-          {data.map((item, index) => (
+          {licenseData.map((item, index) => (
             <React.Fragment key={index}>
               <tr>
-                <td>{item.slNo}</td>
+                <td>{index + 1}</td>
                 <td>{item.name}</td>
                 <td>{item.size}</td>
                 <td>{item.date}</td>
@@ -45,7 +77,7 @@ function UserHome() {
               {expandedRow === index && (
                 <tr className="expanded-row">
                   <td colSpan="5">
-                    <button className="btn btn-success">Download</button>
+                    <a className="btn btn-success" href={item.downloadLink} download>Download</a>
                     <input type="text" placeholder="Enter license code" />
                     <button className="btn btn-info">Report License</button>
                   </td>

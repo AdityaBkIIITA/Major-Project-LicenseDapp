@@ -1,23 +1,54 @@
-// License.js
-
 import React, { useState, useEffect } from 'react';
 import './Licenses.css';
+import { getFileFromIPFS } from '../../utils/ipfs';
 
-function License() {
+function License({ sfId, licenseContract, registerContract }) {
   // State variable to store license data
   const [licenses, setLicenses] = useState([]);
 
-  // Simulated data for licenses (replace with actual data fetching logic)
-  const dummyData = [
-    { id: 1, name: 'License 1', size: '10 MB', date: '2024-05-10', downloadLink: '/downloads/license1.pdf' },
-    { id: 2, name: 'License 2', size: '8 MB', date: '2024-05-12', downloadLink: '/downloads/license2.pdf' },
-    // Add more license data as needed
-  ];
-
   useEffect(() => {
-    // Simulated fetching of license data (replace with actual data fetching logic)
-    setLicenses(dummyData);
-  }, []);
+    const fetchData = async () => {
+      try {
+        // Get license IDs for the SF
+        const licenseIds = await licenseContract.methods.getLicensesForSF(sfId).call();
+        
+        // Fetch details for each license
+        const licenseData = await Promise.all(
+          licenseIds.map(async (licenseId) => {
+            // Fetch license details from the contract
+            const license = await licenseContract.methods.getLicense(licenseId).call();
+            const ipfsHash = license.ipfsHash;
+            const { data, contentType } = await getFileFromIPFS(ipfsHash);
+            
+            // Return an object with all necessary details
+            return {
+              id: licenseId,
+              name: license.name, // Corrected: Use license.name instead of data.name
+              size: data.length, // Corrected: Use data.length to get the size in bytes
+              date: new Date(license.grantDate * 1000).toLocaleDateString(), // Convert timestamp to date
+              downloadLink: URL.createObjectURL(new Blob([data], { type: contentType })), // Create download link
+            };
+          })
+        );
+
+        // Set the fetched data in state
+        setLicenses(licenseData);
+      } catch (error) {
+        console.error('Error fetching licenses:', error);
+      }
+    };
+
+    fetchData();
+  }, [sfId, licenseContract]);
+
+  const handleDownload = (url) => {
+    try {
+      // Open the download link in a new window
+      window.open(url);
+    } catch (error) {
+      console.error('Error downloading file:', error);
+    }
+  };
 
   return (
     <div>
@@ -27,7 +58,7 @@ function License() {
           <tr>
             <th>Sl No.</th>
             <th>Name</th>
-            <th>Size</th>
+            <th>Size (bytes)</th> {/* Updated: Show size in bytes */}
             <th>Date</th>
             <th>Download</th>
           </tr>
@@ -39,7 +70,7 @@ function License() {
               <td>{license.name}</td>
               <td>{license.size}</td>
               <td>{license.date}</td>
-              <td><a href={license.downloadLink} download>Download</a></td>
+              <td><button onClick={() => handleDownload(license.downloadLink)}>Download</button></td>
             </tr>
           ))}
         </tbody>

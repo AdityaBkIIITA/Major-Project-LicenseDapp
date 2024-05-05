@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import SignUp from './components/signup/SignUp';
 import SignIn from './components/signin/SignIn';
@@ -7,29 +7,34 @@ import FileList from './components/filelist/FileList';
 import UserHome from './components/userhome/UserHome';
 import SFHome from './components/sfhome/SFHome';
 import RBHome from './components/rbhome/RBHome';
-import Comments from './components/comments/Comments';
-import Requests from './components/requests/Requests';
-import Licenses from './components/licenses/Licenses';
-import NewLicenseRequest from './components/new-license-request/NewLicenseRequest';
 
 function App() {
+  const [address, setAddress] = useState('');
+
+  useEffect(() => {
+    const fetchAccounts = async () => {
+      try {
+        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+        setAddress(accounts[0]);
+      } catch (error) {
+        console.error('Error fetching accounts:', error);
+      }
+    };
+    fetchAccounts();
+  }, []);
+
   return (
     <Router>
       <div>
         <h1>IPFS DApp</h1>
         <Routes>
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/signin" element={<SignIn />} />
-          <Route path="/addfile" element={<AddFile />} />
-          <Route path="/filelist" element={<FileList />} />
-          <Route path="/userhome" element={<UserHome />} />
-          <Route path="/rbhome" element={<RBHome />} />
-          <Route path="/rbhome/requests" element={<Requests/>} />
-          <Route path="/rbhome/comments" element={<Comments/>} />
-          <Route path="/sfhome" element={<SFHome />} />
-          <Route path="/sfhome/comments" element={<Comments />} />
-          <Route path="/sfhome/licenses" element={<Licenses />} />
-          <Route path="/sfhome/raise-request" element={<NewLicenseRequest />} />
+          <Route path="/signup" element={<SignUp address={address} />} />
+          <Route path="/signin" element={<SignIn address={address}/>} />
+          <Route path="/addfile" element={<AddFile address={address}/>} />
+          <Route path="/filelist" element={<FileList address={address}/>} />
+          <Route path="/userhome" element={<UserHome address={address}/>} />
+          <Route path="/rbhome/*" element={<RBHome address={address}/>} />
+          <Route path="/sfhome/*" element={<SFHome address={address}/>} />
         </Routes>
       </div>
     </Router>
