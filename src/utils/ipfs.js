@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 const pinataBaseUrl = 'https://api.pinata.cloud/pinning';
-const pinataApiKey = '0d36bdb8c811216cbe08';
-const pinataSecretApiKey = 'fd0bc7a2d64e78f6e4cb920e788851a3b97bb61a313b426b314b59b7ef1a1bc9';
+const pinataApiKey = '02cfa4527b9bbb6385db';
+const pinataSecretApiKey = 'ae97af71660003b1999ecfcb0a0664cec932bfe0b9614d9c47f404d1f9be10eb';
 
 const uploadFileToIPFS = async (file) => {
   try {
@@ -28,28 +28,40 @@ const uploadFileToIPFS = async (file) => {
 };
 
 const getFileFromIPFS = async (ipfsHash) => {
-  try {
-    const response = await axios.get(
-      `${pinataBaseUrl}/ipfs/${ipfsHash}`,
-      {
-        responseType: 'arraybuffer', // Set response type to arraybuffer
-        headers: {
-          pinata_api_key: pinataApiKey,
-          pinata_secret_api_key: pinataSecretApiKey,
-        },
+  // try {
+  //   const response = await axios.get(
+  //     `https://gateway.pinata.cloud/ipfs/${ipfsHash}`,
+  //     {
+  //       responseType: 'arraybuffer', // Set response type to arraybuffer
+  //       headers: {
+  //         'Authorization': `Bearer ${jwtToken}`, // Add the WT token as a Bearer token
+  //       },
+  //     }
+  //   );
+
+  //   // Extract MIME type from response headers
+  //   const contentType = response.headers['content-type'];
+
+  //   return {
+  //     data: response.data, // File data as ArrayBuffer
+  //     contentType: contentType, // MIME type of the file
+  //   };
+  // } catch (error) {
+  //   throw new Error('Error fetching file from Pinata IPFS');
+  // }
+
+      const baseURL = "https://amaranth-dying-perch-686.mypinata.cloud/ipfs/";
+      const url = `${baseURL}${ipfsHash}`;
+
+      try {
+        const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error('Failed to fetch IPFS content');
+        }
+        return response;
+      } catch (error) {
+        console.error('Error fetching IPFS content:', error);
       }
-    );
-
-    // Extract MIME type from response headers
-    const contentType = response.headers['content-type'];
-
-    return {
-      data: response.data, // File data as ArrayBuffer
-      contentType: contentType, // MIME type of the file
-    };
-  } catch (error) {
-    throw new Error('Error fetching file from Pinata IPFS');
-  }
 };
 
 export { uploadFileToIPFS, getFileFromIPFS };

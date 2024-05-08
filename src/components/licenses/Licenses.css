@@ -1,49 +1,5 @@
-/* License.css */
-
-/* Style for the container */
-.license-container {
-    margin-top: 20px;
-  }
-  
-  /* Style for the table */
-  .license-table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  /* Style for table header */
-  .license-table th {
-    background-color: #f2f2f2;
-    border: 1px solid #dddddd;
-    padding: 8px;
-    text-align: left;
-  }
-  
-  /* Style for table data */
-  .license-table td {
-    border: 1px solid #dddddd;
-    padding: 8px;
-  }
-  
-  /* Style for table row */
-  .license-table tr:nth-child(even) {
-    background-color: #f2f2f2;
-  }
-  
-  /* Style for table row hover */
-  .license-table tr:hover {
-    background-color: #e2e2e2;
-  }
-  
-  /* Style for download link */
-  .license-download-link {
-    text-decoration: none;
-    color: blue;
-  }
-  
-  /* Style for download link hover */
-  .license-download-link:hover {
-    text-decoration: underline;
-    color: darkblue;
+select {
+    position: relative;
+    z-index: 1; /* Ensure it's above other elements */
   }
   

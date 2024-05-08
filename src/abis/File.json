@@ -6,29 +6,23 @@
         {
           "indexed": true,
           "internalType": "string",
-          "name": "licenseId",
+          "name": "fileHash",
           "type": "string"
-        },
-        {
-          "indexed": true,
-          "internalType": "address",
-          "name": "userId",
-          "type": "address"
-        },
-        {
-          "indexed": false,
-          "internalType": "uint256",
-          "name": "timestamp",
-          "type": "uint256"
         },
         {
           "indexed": false,
           "internalType": "string",
-          "name": "text",
+          "name": "fileName",
           "type": "string"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "fileSize",
+          "type": "uint256"
         }
       ],
-      "name": "CommentAdded",
+      "name": "FileDetailsSet",
       "type": "event"
     },
     {
@@ -37,34 +31,19 @@
           "internalType": "string",
           "name": "",
           "type": "string"
-        },
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
         }
       ],
-      "name": "comments",
+      "name": "fileDetails",
       "outputs": [
         {
           "internalType": "string",
-          "name": "licenseId",
+          "name": "fileName",
           "type": "string"
-        },
-        {
-          "internalType": "address",
-          "name": "userId",
-          "type": "address"
         },
         {
           "internalType": "uint256",
-          "name": "timestamp",
+          "name": "fileSize",
           "type": "uint256"
-        },
-        {
-          "internalType": "string",
-          "name": "text",
-          "type": "string"
         }
       ],
       "stateMutability": "view",
@@ -75,16 +54,21 @@
       "inputs": [
         {
           "internalType": "string",
-          "name": "_licenseId",
+          "name": "fileHash",
           "type": "string"
         },
         {
           "internalType": "string",
-          "name": "_text",
+          "name": "fileName",
           "type": "string"
+        },
+        {
+          "internalType": "uint256",
+          "name": "fileSize",
+          "type": "uint256"
         }
       ],
-      "name": "addComment",
+      "name": "setFileDetails",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
@@ -93,38 +77,28 @@
       "inputs": [
         {
           "internalType": "string",
-          "name": "_licenseId",
+          "name": "_fileHash",
           "type": "string"
         }
       ],
-      "name": "getComments",
+      "name": "getFileDetails",
       "outputs": [
         {
           "components": [
             {
               "internalType": "string",
-              "name": "licenseId",
+              "name": "fileName",
               "type": "string"
-            },
-            {
-              "internalType": "address",
-              "name": "userId",
-              "type": "address"
             },
             {
               "internalType": "uint256",
-              "name": "timestamp",
+              "name": "fileSize",
               "type": "uint256"
-            },
-            {
-              "internalType": "string",
-              "name": "text",
-              "type": "string"
             }
           ],
-          "internalType": "struct CommentContract.Comment[]",
+          "internalType": "struct FileContract.FileInfo",
           "name": "",
-          "type": "tuple[]"
+          "type": "tuple"
         }
       ],
       "stateMutability": "view",

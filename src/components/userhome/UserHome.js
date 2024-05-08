@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { getLicenseContract } from '../../utils/web3';
+import { getLicenseContract, getCommentContract, getFileContract } from '../../utils/web3';
 import { getFileFromIPFS } from '../../utils/ipfs';
+import './UserHome.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-function UserHome({ address }) {
+function UserHome({ address, username }) {
+  console.log(address);
   const [licenseData, setLicenseData] = useState([]);
 
   useEffect(() => {
@@ -13,16 +16,22 @@ function UserHome({ address }) {
 
         const data = await Promise.all(
           allLicenses.map(async (license) => {
-            if (license.status === "Approved") {
-              const ipfsHash = license.ipfsHash;
-              const { data, contentType } = await getFileFromIPFS(ipfsHash);
+            if (license.status === 0n && license.licenseFileHash !== '') {
+              const ipfsHash = license.licenseFileHash;
+              const response = await getFileFromIPFS(ipfsHash);
+              const fileContract = await getFileContract();
+              const file = await fileContract.methods.getFileDetails(ipfsHash).call();
+              const commentContract = await getCommentContract();
+              const comments = await commentContract.methods.getComments(license.licenseId).call();
               return {
-                lfId: license.lfId,
+                licenseId: license.licenseId,
+                sfId: license.sfId,
                 rbId: license.rbId,
-                name: "LicenseFile+" + ipfsHash, // Adjust name as needed
-                size: data.size, // Assuming size is available in data
-                date: new Date(license.grantTimestamp * 1000).toLocaleDateString(), // Convert timestamp to date
-                downloadLink: URL.createObjectURL(new Blob([data], { type: contentType })),
+                name: file.fileName, // Adjust name as needed
+                size: Number(file.fileSize), // Assuming size is available in data
+                date: new Date(Number(license.grantTimestamp) * 1000).toLocaleDateString(), // Convert timestamp to date
+                downloadLink: URL.createObjectURL(new Blob([response])),
+                comments: comments, // Initialize comments array
               };
             } else {
               return null; // Return null for non-approved licenses
@@ -49,15 +58,42 @@ function UserHome({ address }) {
     setExpandedRow(expandedRow === index ? null : index);
   };
 
+  // Function to handle reporting comment
+  const reportComment = async (licenseId, comment) => {
+    const commentContract = await getCommentContract();
+    await commentContract.methods.addComment(licenseId, comment).send({ from: address });
+
+    // Fetch comments again after adding a new one
+    const updatedLicenseData = await Promise.all(
+      licenseData.map(async (item) => {
+        // Check if the current item is the one where the comment was added
+        if (item.licenseId === licenseId) {
+          // Fetch updated comments for the license
+          const comments = await commentContract.methods.getComments(licenseId).call();
+          return {
+            ...item,
+            comments: comments,
+          };
+        } else {
+          return item;
+        }
+      })
+    );
+
+    // Update state with the updated license data
+    setLicenseData(updatedLicenseData);
+  };
+
   return (
     <div>
-      <h2>User Home</h2>
+    <h2>User Home</h2>
+    <div className="App">
       <table className="table">
         <thead>
           <tr>
             <th scope="col">Sl No.</th>
             <th scope="col">Name</th>
-            <th scope="col">Size</th>
+            <th scope="col">Size(in Bytes)</th>
             <th scope="col">Date</th>
             <th scope="col">Actions</th>
           </tr>
@@ -65,7 +101,7 @@ function UserHome({ address }) {
         <tbody>
           {licenseData.map((item, index) => (
             <React.Fragment key={index}>
-              <tr>
+              <tr className='rows'>
                 <td>{index + 1}</td>
                 <td>{item.name}</td>
                 <td>{item.size}</td>
@@ -78,8 +114,19 @@ function UserHome({ address }) {
                 <tr className="expanded-row">
                   <td colSpan="5">
                     <a className="btn btn-success" href={item.downloadLink} download>Download</a>
-                    <input type="text" placeholder="Enter license code" />
-                    <button className="btn btn-info">Report License</button>
+                    <div>
+                      <input type="text" placeholder="Enter Comments" />
+                      <button className="btn btn-info" onClick={() => reportComment(item.licenseId, document.querySelector('input').value)}>Add Comment</button>
+                    </div>
+                    <div>
+                      <h3>Comments</h3>
+                      <ul>
+                      {item.comments.map((comment, commentIndex) => (
+                      <li key={commentIndex}>{comment.text} (By: {comment.userId})</li>
+                      ))}
+
+                      </ul>
+                    </div>
                   </td>
                 </tr>
               )}
@@ -87,6 +134,7 @@ function UserHome({ address }) {
           ))}
         </tbody>
       </table>
+    </div>
     </div>
   );
 }

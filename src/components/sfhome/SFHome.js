@@ -4,34 +4,32 @@ import Comments from '../comments/Comments';
 import Licenses from '../licenses/Licenses';
 import NewLicenseRequest from '../new-license-request/NewLicenseRequest';
 import { getLicenseContract, getRegisterContract } from '../../utils/web3';
+import './SFHome.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function SFHome({ address }) {
-  console.log(address);
-  const [licenseIds, setLicenseIds] = useState([]);
   const [sfId, setSfId] = useState([]);
   const [licenseContract,setLicenseContract] = useState([]);
   const [registerContract,setRegisterContract] = useState([]);
 
   useEffect(() => {
-    const fetchLicenseIds = async () => {
+    const fetchData = async () => {
       try {
         const registerContract = await getRegisterContract();
         setRegisterContract(registerContract);
         const sfId = await registerContract.methods.getId(address).call();
         setSfId(sfId);
-        console.log("Aditya:" + sfId);
-        console.log("Type:" + typeof sfId);
         const licenseContract = await getLicenseContract();
         setLicenseContract(licenseContract);
-        const ids = await licenseContract.methods.getLicensesForSF(sfId).call();
-        setLicenseIds(ids);
+  
       } catch (error) {
-        console.error('Error fetching license ids:', error);
-        // Handle error (e.g., show error message to the user)
+        console.error('Error fetching data:', error);
       }
     };
-    fetchLicenseIds();
-  }, [address]); // Add address to the dependency array
+  
+    fetchData();
+  }, [address]);
+  // Add address to the dependency array
 
   return (
     <div>
@@ -48,9 +46,9 @@ function SFHome({ address }) {
         </li>
       </ul>
       <Routes>
-        <Route path="/comments" element={<Comments licenseIds={licenseIds} />} />
-        <Route path="/licenses" element={<Licenses sfId={sfId} licenseContract={licenseContract} registerContract={registerContract} />} />
-        <Route path="/raise-request" element={<NewLicenseRequest address={address} licenseContract={licenseContract} sfId={sfId} />}/>
+        <Route path="/comments" element={<Comments sfId={sfId} licenseContract={licenseContract} />} />
+        <Route path="/licenses" element={<Licenses address={address} sfId={sfId} licenseContract={licenseContract}/>} />
+        <Route path="/raise-request" element={<NewLicenseRequest address={address} licenseContract={licenseContract} registerContract={registerContract} sfId={sfId} />}/>
         </Routes>
     </div>
   );

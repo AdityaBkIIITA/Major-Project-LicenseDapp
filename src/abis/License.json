@@ -8,7 +8,7 @@
           "type": "uint256"
         }
       ],
-      "name": "allLicenseIds",
+      "name": "allRequestIds",
       "outputs": [
         {
           "internalType": "string",
@@ -69,6 +69,16 @@
           "internalType": "string",
           "name": "licenseFileHash",
           "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "requestId",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "feedbackHash",
+          "type": "string"
         }
       ],
       "stateMutability": "view",
@@ -90,6 +100,20 @@
       "constant": true
     },
     {
+      "inputs": [],
+      "name": "nextRequestId",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
       "inputs": [
         {
           "internalType": "string",
@@ -102,7 +126,7 @@
           "type": "uint256"
         }
       ],
-      "name": "rbToLicense",
+      "name": "rbToLicenses",
       "outputs": [
         {
           "internalType": "string",
@@ -127,7 +151,7 @@
           "type": "uint256"
         }
       ],
-      "name": "sfToLicense",
+      "name": "rbToRequests",
       "outputs": [
         {
           "internalType": "string",
@@ -143,7 +167,57 @@
       "inputs": [
         {
           "internalType": "string",
-          "name": "_licenseId",
+          "name": "",
+          "type": "string"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "sfToLicenses",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "sfToRequests",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "_requestId",
           "type": "string"
         }
       ],
@@ -189,6 +263,16 @@
             {
               "internalType": "string",
               "name": "licenseFileHash",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "requestId",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "feedbackHash",
               "type": "string"
             }
           ],
@@ -237,6 +321,46 @@
           "type": "string"
         }
       ],
+      "name": "getRequestsForSF",
+      "outputs": [
+        {
+          "internalType": "string[]",
+          "name": "",
+          "type": "string[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "_rbId",
+          "type": "string"
+        }
+      ],
+      "name": "getRequestsForRB",
+      "outputs": [
+        {
+          "internalType": "string[]",
+          "name": "",
+          "type": "string[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "_sfId",
+          "type": "string"
+        }
+      ],
       "name": "getLicensesForSF",
       "outputs": [
         {
@@ -273,7 +397,7 @@
       "inputs": [
         {
           "internalType": "string",
-          "name": "licenseId",
+          "name": "_requestId",
           "type": "string"
         },
         {
@@ -291,7 +415,12 @@
       "inputs": [
         {
           "internalType": "string",
-          "name": "licenseId",
+          "name": "_requestId",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "feedbackHash",
           "type": "string"
         }
       ],
@@ -344,6 +473,16 @@
             {
               "internalType": "string",
               "name": "licenseFileHash",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "requestId",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "feedbackHash",
               "type": "string"
             }
           ],

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { getCommentContract } from '../../utils/web3';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-function Comments({ licenseIds }) {
+function Comments({ sfId, rbId, licenseContract }) {
   const [comments, setComments] = useState([]);
 
   useEffect(() => {
@@ -9,30 +10,37 @@ function Comments({ licenseIds }) {
       try {
         const commentContract = await getCommentContract();
         const allComments = [];
-        for (const licenseId of licenseIds) {
-          const commentsForLicense = await commentContract.methods.getComments(licenseId).call();
-          const formattedComments = commentsForLicense.map(comment => ({
-            licenseId: licenseId,
-            userId: comment.userId,
-            comment: comment.commentText
-          }));
-          allComments.push(...formattedComments);
+        let licenseIds;
+        if (rbId !== undefined) {
+          licenseIds = await licenseContract.methods.getLicensesForRB(rbId).call();
+        } else if (sfId !== undefined) {
+          licenseIds = await licenseContract.methods.getLicensesForSF(sfId).call();
         }
-        setComments(allComments);
+        if (licenseIds) {
+          for (const licenseId of licenseIds) {
+            const commentsForLicense = await commentContract.methods.getComments(licenseId).call();
+            const formattedComments = commentsForLicense.map(comment => ({
+              licenseId: licenseId,
+              userId: comment.userId,
+              comment: comment.text
+            }));
+            allComments.push(...formattedComments);
+          }
+          setComments(allComments);
+        }
       } catch (error) {
         console.error('Error fetching comments:', error);
       }
     }
-    if (licenseIds.length > 0) {
-      fetchComments();
-    }
-  }, [licenseIds]);
+    
+    fetchComments();
+  }, [sfId, rbId, licenseContract]);
 
   return (
-    <div>
-      <h2>Reported Comments</h2>
+    <div className="container">
+      <h2 className="mt-4 mb-3">Reported Comments</h2>
       <table className="table">
-        <thead>
+        <thead className="table-dark">
           <tr>
             <th scope="col">License ID</th>
             <th scope="col">User ID</th>

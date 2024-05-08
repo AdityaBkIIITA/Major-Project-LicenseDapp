@@ -1,0 +1,22 @@
+.profile-card {
+    margin-top: 50px;
+    max-width: 400px;
+  }
+  
+  .profile-info {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .profile-item {
+    margin-bottom: 10px;
+  }
+  
+  .profile-label {
+    font-weight: bold;
+  }
+  
+  .profile-value {
+    margin-left: 10px;
+  }
+  
